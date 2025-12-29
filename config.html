@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設定 - 日本元号クイズ</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .period-list {
+        margin: 1rem 0;
+      }
+
+      .period-item {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+      }
+
+      .period-item:hover {
+        border-color: #333;
+        background: #f5f5f5;
+      }
+
+      .period-item.selected {
+        border-color: #333;
+        border-width: 4px;
+        background: white;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .start-button {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .start-button button {
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>時代選択</h1>
+      <div class="small-button">
+        <button onclick="startSelectedQuiz()" id="startBtn" disabled>選択する</button>
+      </div>
+
+      <div class="period-list" id="periodList">
+        <!-- 時代選択肢がここに動的に追加される -->
+      </div>
+    </div>
+
+    <script src="era-data.js"></script>
+    <script>
+      let selectedPeriod = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const periodList = document.getElementById('periodList');
+        const savedPeriod = JSON.parse(localStorage.getItem('selectedPeriod') || 'null');
+
+        // 全時代オプションを追加
+        const allPeriodItem = document.createElement('div');
+        allPeriodItem.className = 'period-item';
+        allPeriodItem.textContent = '全時代';
+        allPeriodItem.onclick = () => selectPeriod(null, allPeriodItem);
+        if (!savedPeriod) {
+          allPeriodItem.classList.add('selected');
+          selectedPeriod = null;
+          document.getElementById('startBtn').disabled = false;
+        }
+        periodList.appendChild(allPeriodItem);
+
+        // 各時代のオプションを追加
+        eraPeriod.forEach((period) => {
+          const periodItem = document.createElement('div');
+          periodItem.className = 'period-item';
+          periodItem.textContent = period.name;
+          periodItem.onclick = () => selectPeriod(period, periodItem);
+          if (savedPeriod && savedPeriod.name === period.name) {
+            periodItem.classList.add('selected');
+            selectedPeriod = period;
+            document.getElementById('startBtn').disabled = false;
+          }
+          periodList.appendChild(periodItem);
+        });
+      });
+
+      function selectPeriod(period, element) {
+        // 全ての選択を解除
+        document.querySelectorAll('.period-item').forEach((item) => {
+          item.classList.remove('selected');
+        });
+
+        // 選択された項目をハイライト
+        element.classList.add('selected');
+        selectedPeriod = period;
+
+        // 開始ボタンを有効化
+        document.getElementById('startBtn').disabled = false;
+      }
+
+      function startSelectedQuiz() {
+        if (selectedPeriod) {
+          localStorage.setItem('selectedPeriod', JSON.stringify(selectedPeriod));
+        } else {
+          localStorage.removeItem('selectedPeriod');
+        }
+        window.location.href = 'index.html';
+      }
+    </script>
+  </body>
+</html>

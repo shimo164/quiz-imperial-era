@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>日本元号クイズ</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div id="startSection">
-            <h1>日本元号クイズ</h1>
-            <button onclick="startQuiz()" id="startBtn">開始する</button>
+      <div id="startSection">
+        <h1>日本元号クイズ</h1>
+        <button onclick="startQuiz()" id="startBtn">開始する</button>
+      </div>
+      <div class="era-display hidden" id="eraDisplay"></div>
+      <div class="hint" id="hint"></div>
+      <div class="input-group">
+        <input type="number" id="yearInput" placeholder="開始年を入力" disabled />
+      </div>
+      <div class="action-buttons">
+        <div class="button-pair">
+          <button onclick="showHint()" id="hintBtn" class="small-btn" disabled>ヒント</button>
+          <div class="button-container">
+            <button onclick="submitAnswer()" id="submitBtn" class="small-btn" disabled>回答</button>
+            <button onclick="nextQuestion()" id="nextBtn" class="small-btn hidden" disabled>
+              次の問題へ
+            </button>
+          </div>
         </div>
-        <div class="era-display hidden" id="eraDisplay"></div>
-        <div class="hint" id="hint"></div>
-        <div class="input-group">
-            <input type="number" id="yearInput" placeholder="開始年を入力" disabled>
+      </div>
+      <div class="result" id="result"></div>
+      <div class="score hidden" id="scoreDisplay">
+        正解: <span id="correct">0</span> / 問題数: <span id="total">0</span>
+      </div>
+      <div class="control-section" id="controlSection">
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" id="readingCheckbox" checked onchange="toggleReading()" />
+            よみがな
+          </label>
         </div>
-        <div class="action-buttons">
-            <div class="button-pair">
-                <button onclick="showHint()" id="hintBtn" class="small-btn" disabled>ヒント</button>
-                <div class="button-container">
-                    <button onclick="submitAnswer()" id="submitBtn" class="small-btn" disabled>回答</button>
-                    <button onclick="nextQuestion()" id="nextBtn" class="small-btn hidden" disabled>次の問題へ</button>
-                </div>
-            </div>
+        <div class="reset-group">
+          <button onclick="resetQuiz()" class="small-btn" id="resetBtn" disabled>リセット</button>
         </div>
-        <div class="result" id="result"></div>
-        <div class="score hidden" id="scoreDisplay">
-            正解: <span id="correct">0</span> / 
-            問題数: <span id="total">0</span>
+        <div class="nav-links">
+          <a href="config.html">時代選択</a>
+          <a href="list.html">元号一覧</a>
         </div>
-        <div class="control-section" id="controlSection">
-            <div class="checkbox-group">
-                <label>
-                    <input type="checkbox" id="readingCheckbox" checked onchange="toggleReading()">
-                    よみがな
-                </label>
-            </div>
-            <div class="reset-group">
-                <button onclick="resetQuiz()" class="small-btn" id="resetBtn" disabled>リセット</button>
-            </div>
-            <div class="nav-links">
-                <a href="list.html">元号一覧を見る</a>
-            </div>
-        </div>
+      </div>
     </div>
+    <script src="era-data.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
