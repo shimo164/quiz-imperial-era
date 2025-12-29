@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本元号クイズ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>日本元号クイズ</h1>
+        <div class="era-display hidden" id="eraDisplay"></div>
+        <div class="hint" id="hint"></div>
+        <div>
+            <button onclick="startQuiz()" id="startBtn">開始する</button>
+        </div>
+        <div class="input-group">
+            <input type="number" id="yearInput" placeholder="開始年を入力" disabled>
+        </div>
+        <div>
+            <button onclick="submitAnswer()" id="submitBtn" disabled>回答</button>
+        </div>
+        <div>
+            <button onclick="nextQuestion()" id="nextBtn" disabled>次の問題へ</button>
+        </div>
+        <div class="result" id="result"></div>
+        <div class="score">
+            正解: <span id="correct">0</span> / 
+            問題数: <span id="total">0</span>
+        </div>
+        <div class="control-buttons">
+            <button onclick="showHint()" id="hintBtn" class="small-btn" disabled>ヒント</button>
+        </div>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="readingCheckbox" checked onchange="toggleReading()">
+                よみがな
+            </label>
+        </div>
+        <div class="reset-group">
+            <button onclick="resetQuiz()" class="small-btn" id="resetBtn" disabled>リセット</button>
+        </div>
+        <div class="nav-links">
+            <a href="list.html">元号一覧を見る</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
