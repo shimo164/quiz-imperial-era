@@ -24,6 +24,16 @@ body {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem;
+    min-height: 100vh;
+  }
+}
+
 h1 {
   margin-bottom: 2rem;
   font-size: 1.8rem;
