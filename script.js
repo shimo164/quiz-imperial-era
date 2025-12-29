@@ -267,15 +267,25 @@ const ui = {
     ['submitBtn', 'nextBtn', 'hintBtn', 'resetBtn'].forEach((btn) => ui.setButtonState(btn, true)),
   clearText: () => ['result', 'hint'].forEach((el) => ui.setText(el, '')),
   resetScore: () => ['correct', 'total'].forEach((el) => ui.setText(el, '0')),
+  showSubmitBtn: () => {
+    $('submitBtn').classList.remove('hidden');
+    $('nextBtn').classList.add('hidden');
+  },
+  showNextBtn: () => {
+    $('submitBtn').classList.add('hidden');
+    $('nextBtn').classList.remove('hidden');
+  }
 };
 
 function startQuiz() {
-  ui.display('startBtn', 'none');
+  ui.show('scoreDisplay');
+  ui.hide('startSection');
   ui.show('eraDisplay');
   ui.setButtonState('yearInput', false);
   ui.setButtonState('submitBtn', false);
   ui.setButtonState('hintBtn', false);
   ui.setButtonState('resetBtn', false);
+  ui.showSubmitBtn();
   nextQuestion();
 }
 
@@ -288,6 +298,7 @@ function nextQuestion() {
   ui.clearText();
   ui.setText('hintBtn', 'ヒント');
   ui.setButtonState('hintBtn', false);
+  ui.showSubmitBtn();
   ui.setButtonState('nextBtn', true);
   ui.setButtonState('submitBtn', false);
 }
@@ -314,6 +325,7 @@ function submitAnswer() {
   ui.setText('total', totalCount);
   ui.setButtonState('submitBtn', true);
   ui.setButtonState('hintBtn', true);
+  ui.showNextBtn();
   ui.setButtonState('nextBtn', false);
 }
 
@@ -338,10 +350,12 @@ function resetQuiz() {
   correctCount = totalCount = hintLevel = 0;
   currentEra = null;
 
-  ui.display('startBtn', 'inline-block');
+  ui.hide('scoreDisplay');
+  ui.show('startSection');
   ui.hide('eraDisplay');
   ui.setButtonState('yearInput', true);
   $('yearInput').value = '';
+  ui.showSubmitBtn();
   ui.resetButtons();
   ui.clearText();
   ui.resetScore();
