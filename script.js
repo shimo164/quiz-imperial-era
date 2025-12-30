@@ -4,7 +4,7 @@ let totalCount = 0;
 let hintLevel = 0;
 let filteredEraData = eraData;
 
-const $ = id => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 
 const ui = {
   setButtonState: (btnId, disabled) => ($(btnId).disabled = disabled),
@@ -24,21 +24,21 @@ const ui = {
   showNextBtn: () => {
     $('submitBtn').classList.add('hidden');
     $('nextBtn').classList.remove('hidden');
-  }
+  },
 };
 
 function startQuiz() {
   // 選択された時代でデータをフィルタリング
   const selectedPeriod = JSON.parse(localStorage.getItem('selectedPeriod') || 'null');
   if (selectedPeriod) {
-    filteredEraData = eraData.filter(era => 
-      era.start >= selectedPeriod.start && era.start < selectedPeriod.end
+    filteredEraData = eraData.filter(
+      (era) => era.start >= selectedPeriod.start && era.start < selectedPeriod.end,
     );
   } else {
     filteredEraData = eraData;
   }
-  
-  ui.show('scoreDisplay');
+
+  //   ui.show('scoreDisplay'); <!-- TODO: Consider how to use this section. -->
   ui.hide('startSection');
   ui.show('eraDisplay');
   ui.setButtonState('yearInput', false);
@@ -65,9 +65,10 @@ function nextQuestion() {
 
 function updateEraDisplay() {
   const showReading = $('readingCheckbox').checked;
-  const content = showReading && currentEra.reading 
-    ? `<div class="reading">${currentEra.reading}</div><div>${currentEra.name}</div>`
-    : `<div>${currentEra.name}</div>`;
+  const content =
+    showReading && currentEra.reading
+      ? `<div class="reading">${currentEra.reading}</div><div>${currentEra.name}</div>`
+      : `<div>${currentEra.name}</div>`;
   $('eraDisplay').innerHTML = content;
 }
 
@@ -91,7 +92,7 @@ function submitAnswer() {
 function showHint() {
   const startYear = currentEra.start;
   hintLevel++;
-  
+
   if (hintLevel === 1) {
     const rangeStart = Math.floor(startYear / 100) * 100;
     ui.setText('hint', `${rangeStart}-${rangeStart + 99}の間`);
@@ -124,6 +125,6 @@ function toggleReading() {
   if (currentEra) updateEraDisplay();
 }
 
-$('yearInput').addEventListener('keypress', e => {
+$('yearInput').addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && !$('submitBtn').disabled) submitAnswer();
 });
